@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 //Settings
 const delayAmount = 5000;
-const sites = ["https://developer.mozilla.org", "https://twitter.com/sggrc"];
+const sites = ["https://twitter.com/briankrebs", "https://www.amazon.com/", "https://www.reddit.com/", "https://www.nytimes.com/", "https://www.cnn.com/", "https://www.facebook.com/"];
 
 //////////////////////////////////////////////////////////////////////////////////
 
