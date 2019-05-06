@@ -1,16 +1,21 @@
 {
 
+    "description": "Crawls a list of web pages for resources.",
     "manifest_version": 2,
     "name": "WebResourceCrawler",
     "version": "1.0",
-  
-    "description": "Crawls a list of web pages for resources.",
-
-    "content_scripts": [
-      {
-        "matches": ["*://*.google.com/*"],
-        "js": ["webreslist.js"]
+    "background": {
+      "scripts": ["webreslist.js"]
+    },
+    "browser_action": {
+      "default_icon": {
+        "16": "icons/page-16.png",
+        "32": "icons/page-32.png"
       }
+    },
+    "permissions": [
+      "webRequest",
+      "webRequestBlocking",
+      "<all_urls>"
     ]
-  
   }
