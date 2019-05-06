@@ -11,8 +11,11 @@ const emptyResultRow = {
     "count"                : 0,
     "originCount"          : 0,
     "gzippedCount"         : 0,
+    "gzippedOriginCount"   : 0,
     "otherCompressedCount" : 0,
-    "origins"              : []
+    "origins"              : [],
+    "gzippedOrigins"       : []
+
 };
 const emptyResult = {
     "alltext"             : JSON.parse(JSON.stringify(emptyResultRow)),
@@ -25,7 +28,11 @@ const emptyResult = {
     "sfi_extraMemory"     : -1,
     "sfi_memoryOverhead"  : -1.0,
     "proc_extraMemory"    : -1,
-    "proc_memoryOverhead" : -1.0
+    "proc_memoryOverhead" : -1.0,
+    "sfi_extraMemory2"     : -1,
+    "sfi_memoryOverhead2"  : -1.0,
+    "proc_extraMemory2"    : -1,
+    "proc_memoryOverhead2" : -1.0
 };
 var currentResult = JSON.parse(JSON.stringify(emptyResult));
 
@@ -40,6 +47,10 @@ function updateResult(key, url, contentEncoding) {
 
     if (isGZipped(contentEncoding)) {
         currentResult[key].gzippedCount++;
+        if (!currentResult[key].gzippedOrigins.includes(origin)){
+            currentResult[key].gzippedOrigins.push(origin);
+            currentResult[key].gzippedOriginCount++;
+        }
     } else if (isCompressed(contentEncoding)) {
         currentResult[key].otherCompressedCount++;
     }
@@ -83,11 +94,19 @@ function getMemory() {
 
 function runComputations() {
     var sandboxes = currentResult["alltext"].gzippedCount + currentResult["jpeg"].originCount + currentResult["png"].originCount;
-    //1.6MB for SFI, 2,4 for proc
+    //1.6MB for SFI, 2.4 for proc
     currentResult.sfi_extraMemory  = 1638 * sandboxes;
     currentResult.proc_extraMemory = 2458 * sandboxes;
     currentResult.sfi_memoryOverhead = currentResult.sfi_extraMemory * 100.0 / currentResult.memory;
     currentResult.proc_memoryOverhead = currentResult.proc_extraMemory * 100.0 / currentResult.memory;
+
+
+    var sandboxes2 = currentResult["alltext"].gzippedOriginCount + currentResult["jpeg"].originCount + currentResult["png"].originCount;
+    //1.6MB for SFI, 2.4 for proc
+    currentResult.sfi_extraMemory2  = 1638 * sandboxes2;
+    currentResult.proc_extraMemory2 = 2458 * sandboxes2;
+    currentResult.sfi_memoryOverhead2 = currentResult.sfi_extraMemory2 * 100.0 / currentResult.memory;
+    currentResult.proc_memoryOverhead2 = currentResult.proc_extraMemory2 * 100.0 / currentResult.memory;
 }
 
 function launchWebsite(siteStr) {

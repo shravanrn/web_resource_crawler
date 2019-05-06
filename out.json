@@ -1,1 +1,436 @@
-{"nameStr": "results", "valueStr": {"https://www.cnn.com/": {"sfi_extraMemory": 26208, "proc_extraMemory": 39328, "jpeg": {"count": 5, "originCount": 2, "gzippedCount": 0, "otherCompressedCount": 0, "origins": ["https://img.bleacherreport.net", "https://cdn.cnn.com"]}, "js": {"count": 14, "originCount": 6, "gzippedCount": 8, "otherCompressedCount": 3, "origins": ["https://www.cnn.com", "https://cdns.gigya.com", "https://www.i.cdn.cnn.com", "https://cdnjs.cloudflare.com", "https://data.cnn.com", "https://code.jquery.com"]}, "proc_memoryOverhead": 5.814001620256757, "html": {"count": 6, "originCount": 4, "gzippedCount": 3, "otherCompressedCount": 0, "origins": ["https://www.cnn.com", "https://widgets.tree.com", "https://healthguides.cnn.com", "https://www.i.cdn.cnn.com"]}, "sfi_memoryOverhead": 3.874424187949784, "css": {"count": 1, "originCount": 1, "gzippedCount": 1, "otherCompressedCount": 0, "origins": ["https://maxcdn.bootstrapcdn.com"]}, "memory": 676436, "alltext": {"count": 21, "originCount": 9, "gzippedCount": 12, "otherCompressedCount": 3, "origins": ["https://www.cnn.com", "https://cdns.gigya.com", "https://www.i.cdn.cnn.com", "https://widgets.tree.com", "https://cdnjs.cloudflare.com", "https://data.cnn.com", "https://healthguides.cnn.com", "https://code.jquery.com", "https://maxcdn.bootstrapcdn.com"]}, "png": {"count": 14, "originCount": 2, "gzippedCount": 0, "otherCompressedCount": 0, "origins": ["https://cdn.cnn.com", "https://www.cnn.com"]}}, "https://www.facebook.com/": {"sfi_extraMemory": 4914, "proc_extraMemory": 7374, "jpeg": {"count": 13, "originCount": 1, "gzippedCount": 0, "otherCompressedCount": 0, "origins": ["https://scontent-lax3-2.xx.fbcdn.net"]}, "js": {"count": 0, "originCount": 0, "gzippedCount": 0, "otherCompressedCount": 0, "origins": []}, "proc_memoryOverhead": 0.7395328126316296, "html": {"count": 10, "originCount": 2, "gzippedCount": 0, "otherCompressedCount": 10, "origins": ["https://www.facebook.com", "https://staticxx.facebook.com"]}, "sfi_memoryOverhead": 0.4928212966194505, "css": {"count": 14, "originCount": 1, "gzippedCount": 0, "otherCompressedCount": 14, "origins": ["https://static.xx.fbcdn.net"]}, "memory": 997116, "alltext": {"count": 24, "originCount": 3, "gzippedCount": 0, "otherCompressedCount": 24, "origins": ["https://www.facebook.com", "https://static.xx.fbcdn.net", "https://staticxx.facebook.com"]}, "png": {"count": 7, "originCount": 2, "gzippedCount": 0, "otherCompressedCount": 0, "origins": ["https://static.xx.fbcdn.net", "https://scontent-lax3-2.xx.fbcdn.net"]}}, "https://www.amazon.com/": {"sfi_extraMemory": 45864, "proc_extraMemory": 68824, "jpeg": {"count": 106, "originCount": 2, "gzippedCount": 0, "otherCompressedCount": 0, "origins": ["https://images-na.ssl-images-amazon.com", "https://m.media-amazon.com"]}, "js": {"count": 0, "originCount": 0, "gzippedCount": 0, "otherCompressedCount": 0, "origins": []}, "proc_memoryOverhead": 18.41434962220938, "html": {"count": 6, "originCount": 1, "gzippedCount": 6, "otherCompressedCount": 0, "origins": ["https://www.amazon.com"]}, "sfi_memoryOverhead": 12.27123868233481, "css": {"count": 19, "originCount": 1, "gzippedCount": 19, "otherCompressedCount": 0, "origins": ["https://images-na.ssl-images-amazon.com"]}, "memory": 373752, "alltext": {"count": 25, "originCount": 2, "gzippedCount": 25, "otherCompressedCount": 0, "origins": ["https://www.amazon.com", "https://images-na.ssl-images-amazon.com"]}, "png": {"count": 7, "originCount": 1, "gzippedCount": 0, "otherCompressedCount": 0, "origins": ["https://images-na.ssl-images-amazon.com"]}}, "https://www.nytimes.com/": {"sfi_extraMemory": 44226, "proc_extraMemory": 66366, "jpeg": {"count": 6, "originCount": 1, "gzippedCount": 0, "otherCompressedCount": 0, "origins": ["https://static01.nyt.com"]}, "js": {"count": 16, "originCount": 3, "gzippedCount": 11, "otherCompressedCount": 0, "origins": ["https://www.nytimes.com", "https://typeface.nyt.com", "https://static01.nyt.com"]}, "proc_memoryOverhead": 9.62266777248711, "html": {"count": 4, "originCount": 2, "gzippedCount": 3, "otherCompressedCount": 0, "origins": ["https://www.nytimes.com", "https://pay.google.com"]}, "sfi_memoryOverhead": 6.41250195741818, "css": {"count": 9, "originCount": 3, "gzippedCount": 9, "otherCompressedCount": 0, "origins": ["https://www.nytimes.com", "https://static01.nyt.com", "https://news.google.com"]}, "memory": 689684, "alltext": {"count": 29, "originCount": 5, "gzippedCount": 23, "otherCompressedCount": 0, "origins": ["https://www.nytimes.com", "https://static01.nyt.com", "https://news.google.com", "https://typeface.nyt.com", "https://pay.google.com"]}, "png": {"count": 3, "originCount": 3, "gzippedCount": 0, "otherCompressedCount": 0, "origins": ["https://b.thumbs.redditmedia.com", "https://www.redditstatic.com", "https://static01.nyt.com"]}}, "https://twitter.com/briankrebs": {"sfi_extraMemory": 16380, "proc_extraMemory": 24580, "jpeg": {"count": 25, "originCount": 1, "gzippedCount": 0, "otherCompressedCount": 0, "origins": ["https://pbs.twimg.com"]}, "js": {"count": 3, "originCount": 1, "gzippedCount": 3, "otherCompressedCount": 0, "origins": ["https://abs.twimg.com"]}, "proc_memoryOverhead": 7.600400737158477, "html": {"count": 1, "originCount": 1, "gzippedCount": 1, "otherCompressedCount": 0, "origins": ["https://twitter.com"]}, "sfi_memoryOverhead": 5.064872419636121, "css": {"count": 3, "originCount": 1, "gzippedCount": 3, "otherCompressedCount": 0, "origins": ["https://abs.twimg.com"]}, "memory": 323404, "alltext": {"count": 7, "originCount": 2, "gzippedCount": 7, "otherCompressedCount": 0, "origins": ["https://twitter.com", "https://abs.twimg.com"]}, "png": {"count": 8, "originCount": 2, "gzippedCount": 0, "otherCompressedCount": 0, "origins": ["https://pbs.twimg.com", "https://abs.twimg.com"]}}, "https://www.reddit.com/": {"sfi_extraMemory": 68796, "proc_extraMemory": 103236, "jpeg": {"count": 4, "originCount": 4, "gzippedCount": 0, "otherCompressedCount": 0, "origins": ["https://i.redd.it", "https://www.redditstatic.com", "https://b.thumbs.redditmedia.com", "https://a.thumbs.redditmedia.com"]}, "js": {"count": 29, "originCount": 1, "gzippedCount": 29, "otherCompressedCount": 0, "origins": ["https://www.redditstatic.com"]}, "proc_memoryOverhead": 21.52059169328008, "html": {"count": 1, "originCount": 1, "gzippedCount": 1, "otherCompressedCount": 0, "origins": ["https://www.reddit.com"]}, "sfi_memoryOverhead": 14.341224244748888, "css": {"count": 3, "originCount": 1, "gzippedCount": 3, "otherCompressedCount": 0, "origins": ["https://www.redditstatic.com"]}, "memory": 479708, "alltext": {"count": 33, "originCount": 2, "gzippedCount": 33, "otherCompressedCount": 0, "origins": ["https://www.reddit.com", "https://www.redditstatic.com"]}, "png": {"count": 30, "originCount": 5, "gzippedCount": 0, "otherCompressedCount": 0, "origins": ["https://styles.redditmedia.com", "https://www.redditstatic.com", "https://a.thumbs.redditmedia.com", "https://b.thumbs.redditmedia.com", "https://emoji.redditmedia.com"]}}}}
+{
+    "nameStr": "results",
+    "valueStr": {
+        "https://www.cnn.com/": {
+            "sfi_extraMemory": 26208,
+            "proc_extraMemory": 39328,
+            "jpeg": {
+                "count": 5,
+                "originCount": 2,
+                "gzippedCount": 0,
+                "otherCompressedCount": 0,
+                "origins": [
+                    "https://img.bleacherreport.net",
+                    "https://cdn.cnn.com"
+                ]
+            },
+            "js": {
+                "count": 14,
+                "originCount": 6,
+                "gzippedCount": 8,
+                "otherCompressedCount": 3,
+                "origins": [
+                    "https://www.cnn.com",
+                    "https://cdns.gigya.com",
+                    "https://www.i.cdn.cnn.com",
+                    "https://cdnjs.cloudflare.com",
+                    "https://data.cnn.com",
+                    "https://code.jquery.com"
+                ]
+            },
+            "proc_memoryOverhead": 5.814001620256757,
+            "html": {
+                "count": 6,
+                "originCount": 4,
+                "gzippedCount": 3,
+                "otherCompressedCount": 0,
+                "origins": [
+                    "https://www.cnn.com",
+                    "https://widgets.tree.com",
+                    "https://healthguides.cnn.com",
+                    "https://www.i.cdn.cnn.com"
+                ]
+            },
+            "sfi_memoryOverhead": 3.874424187949784,
+            "css": {
+                "count": 1,
+                "originCount": 1,
+                "gzippedCount": 1,
+                "otherCompressedCount": 0,
+                "origins": [
+                    "https://maxcdn.bootstrapcdn.com"
+                ]
+            },
+            "memory": 676436,
+            "alltext": {
+                "count": 21,
+                "originCount": 9,
+                "gzippedCount": 12,
+                "otherCompressedCount": 3,
+                "origins": [
+                    "https://www.cnn.com",
+                    "https://cdns.gigya.com",
+                    "https://www.i.cdn.cnn.com",
+                    "https://widgets.tree.com",
+                    "https://cdnjs.cloudflare.com",
+                    "https://data.cnn.com",
+                    "https://healthguides.cnn.com",
+                    "https://code.jquery.com",
+                    "https://maxcdn.bootstrapcdn.com"
+                ]
+            },
+            "png": {
+                "count": 14,
+                "originCount": 2,
+                "gzippedCount": 0,
+                "otherCompressedCount": 0,
+                "origins": [
+                    "https://cdn.cnn.com",
+                    "https://www.cnn.com"
+                ]
+            },
+            "sfi_extraMemory2": 21294,
+            "proc_extraMemory2": 31954,
+            "sfi_memoryOverhead2": 3.1479696527091994,
+            "proc_memoryOverhead2": 4.7238763164586155
+        },
+        "https://www.facebook.com/": {
+            "sfi_extraMemory": 4914,
+            "proc_extraMemory": 7374,
+            "jpeg": {
+                "count": 13,
+                "originCount": 1,
+                "gzippedCount": 0,
+                "otherCompressedCount": 0,
+                "origins": [
+                    "https://scontent-lax3-2.xx.fbcdn.net"
+                ]
+            },
+            "js": {
+                "count": 0,
+                "originCount": 0,
+                "gzippedCount": 0,
+                "otherCompressedCount": 0,
+                "origins": []
+            },
+            "proc_memoryOverhead": 0.7395328126316296,
+            "html": {
+                "count": 10,
+                "originCount": 2,
+                "gzippedCount": 0,
+                "otherCompressedCount": 10,
+                "origins": [
+                    "https://www.facebook.com",
+                    "https://staticxx.facebook.com"
+                ]
+            },
+            "sfi_memoryOverhead": 0.4928212966194505,
+            "css": {
+                "count": 14,
+                "originCount": 1,
+                "gzippedCount": 0,
+                "otherCompressedCount": 14,
+                "origins": [
+                    "https://static.xx.fbcdn.net"
+                ]
+            },
+            "memory": 997116,
+            "alltext": {
+                "count": 24,
+                "originCount": 3,
+                "gzippedCount": 0,
+                "otherCompressedCount": 24,
+                "origins": [
+                    "https://www.facebook.com",
+                    "https://static.xx.fbcdn.net",
+                    "https://staticxx.facebook.com"
+                ]
+            },
+            "png": {
+                "count": 7,
+                "originCount": 2,
+                "gzippedCount": 0,
+                "otherCompressedCount": 0,
+                "origins": [
+                    "https://static.xx.fbcdn.net",
+                    "https://scontent-lax3-2.xx.fbcdn.net"
+                ]
+            },
+            "sfi_extraMemory2": 9828,
+            "proc_extraMemory2": 14748,
+            "sfi_memoryOverhead2": 0.985642593238901,
+            "proc_memoryOverhead2": 1.4790656252632592
+        },
+        "https://www.amazon.com/": {
+            "sfi_extraMemory": 45864,
+            "proc_extraMemory": 68824,
+            "jpeg": {
+                "count": 106,
+                "originCount": 2,
+                "gzippedCount": 0,
+                "otherCompressedCount": 0,
+                "origins": [
+                    "https://images-na.ssl-images-amazon.com",
+                    "https://m.media-amazon.com"
+                ]
+            },
+            "js": {
+                "count": 0,
+                "originCount": 0,
+                "gzippedCount": 0,
+                "otherCompressedCount": 0,
+                "origins": []
+            },
+            "proc_memoryOverhead": 18.41434962220938,
+            "html": {
+                "count": 6,
+                "originCount": 1,
+                "gzippedCount": 6,
+                "otherCompressedCount": 0,
+                "origins": [
+                    "https://www.amazon.com"
+                ]
+            },
+            "sfi_memoryOverhead": 12.27123868233481,
+            "css": {
+                "count": 19,
+                "originCount": 1,
+                "gzippedCount": 19,
+                "otherCompressedCount": 0,
+                "origins": [
+                    "https://images-na.ssl-images-amazon.com"
+                ]
+            },
+            "memory": 373752,
+            "alltext": {
+                "count": 25,
+                "originCount": 2,
+                "gzippedCount": 25,
+                "otherCompressedCount": 0,
+                "origins": [
+                    "https://www.amazon.com",
+                    "https://images-na.ssl-images-amazon.com"
+                ]
+            },
+            "png": {
+                "count": 7,
+                "originCount": 1,
+                "gzippedCount": 0,
+                "otherCompressedCount": 0,
+                "origins": [
+                    "https://images-na.ssl-images-amazon.com"
+                ]
+            },
+            "sfi_extraMemory2": 8190,
+            "proc_extraMemory2": 12290,
+            "sfi_memoryOverhead2": 2.191292621845502,
+            "proc_memoryOverhead2": 3.288276718251675
+        },
+        "https://www.nytimes.com/": {
+            "sfi_extraMemory": 44226,
+            "proc_extraMemory": 66366,
+            "jpeg": {
+                "count": 6,
+                "originCount": 1,
+                "gzippedCount": 0,
+                "otherCompressedCount": 0,
+                "origins": [
+                    "https://static01.nyt.com"
+                ]
+            },
+            "js": {
+                "count": 16,
+                "originCount": 3,
+                "gzippedCount": 11,
+                "otherCompressedCount": 0,
+                "origins": [
+                    "https://www.nytimes.com",
+                    "https://typeface.nyt.com",
+                    "https://static01.nyt.com"
+                ]
+            },
+            "proc_memoryOverhead": 9.62266777248711,
+            "html": {
+                "count": 4,
+                "originCount": 2,
+                "gzippedCount": 3,
+                "otherCompressedCount": 0,
+                "origins": [
+                    "https://www.nytimes.com",
+                    "https://pay.google.com"
+                ]
+            },
+            "sfi_memoryOverhead": 6.41250195741818,
+            "css": {
+                "count": 9,
+                "originCount": 3,
+                "gzippedCount": 9,
+                "otherCompressedCount": 0,
+                "origins": [
+                    "https://www.nytimes.com",
+                    "https://static01.nyt.com",
+                    "https://news.google.com"
+                ]
+            },
+            "memory": 689684,
+            "alltext": {
+                "count": 29,
+                "originCount": 5,
+                "gzippedCount": 23,
+                "otherCompressedCount": 0,
+                "origins": [
+                    "https://www.nytimes.com",
+                    "https://static01.nyt.com",
+                    "https://news.google.com",
+                    "https://typeface.nyt.com",
+                    "https://pay.google.com"
+                ]
+            },
+            "png": {
+                "count": 3,
+                "originCount": 3,
+                "gzippedCount": 0,
+                "otherCompressedCount": 0,
+                "origins": [
+                    "https://b.thumbs.redditmedia.com",
+                    "https://www.redditstatic.com",
+                    "https://static01.nyt.com"
+                ]
+            },
+            "sfi_extraMemory2": 14742,
+            "proc_extraMemory2": 22122,
+            "sfi_memoryOverhead2": 2.1375006524727267,
+            "proc_memoryOverhead2": 3.20755592416237
+        },
+        "https://twitter.com/briankrebs": {
+            "sfi_extraMemory": 16380,
+            "proc_extraMemory": 24580,
+            "jpeg": {
+                "count": 25,
+                "originCount": 1,
+                "gzippedCount": 0,
+                "otherCompressedCount": 0,
+                "origins": [
+                    "https://pbs.twimg.com"
+                ]
+            },
+            "js": {
+                "count": 3,
+                "originCount": 1,
+                "gzippedCount": 3,
+                "otherCompressedCount": 0,
+                "origins": [
+                    "https://abs.twimg.com"
+                ]
+            },
+            "proc_memoryOverhead": 7.600400737158477,
+            "html": {
+                "count": 1,
+                "originCount": 1,
+                "gzippedCount": 1,
+                "otherCompressedCount": 0,
+                "origins": [
+                    "https://twitter.com"
+                ]
+            },
+            "sfi_memoryOverhead": 5.064872419636121,
+            "css": {
+                "count": 3,
+                "originCount": 1,
+                "gzippedCount": 3,
+                "otherCompressedCount": 0,
+                "origins": [
+                    "https://abs.twimg.com"
+                ]
+            },
+            "memory": 323404,
+            "alltext": {
+                "count": 7,
+                "originCount": 2,
+                "gzippedCount": 7,
+                "otherCompressedCount": 0,
+                "origins": [
+                    "https://twitter.com",
+                    "https://abs.twimg.com"
+                ]
+            },
+            "png": {
+                "count": 8,
+                "originCount": 2,
+                "gzippedCount": 0,
+                "otherCompressedCount": 0,
+                "origins": [
+                    "https://pbs.twimg.com",
+                    "https://abs.twimg.com"
+                ]
+            },
+            "sfi_extraMemory2": 8190,
+            "proc_extraMemory2": 12290,
+            "sfi_memoryOverhead2": 2.5324362098180604,
+            "proc_memoryOverhead2": 3.8002003685792385
+        },
+        "https://www.reddit.com/": {
+            "sfi_extraMemory": 68796,
+            "proc_extraMemory": 103236,
+            "jpeg": {
+                "count": 4,
+                "originCount": 4,
+                "gzippedCount": 0,
+                "otherCompressedCount": 0,
+                "origins": [
+                    "https://i.redd.it",
+                    "https://www.redditstatic.com",
+                    "https://b.thumbs.redditmedia.com",
+                    "https://a.thumbs.redditmedia.com"
+                ]
+            },
+            "js": {
+                "count": 29,
+                "originCount": 1,
+                "gzippedCount": 29,
+                "otherCompressedCount": 0,
+                "origins": [
+                    "https://www.redditstatic.com"
+                ]
+            },
+            "proc_memoryOverhead": 21.52059169328008,
+            "html": {
+                "count": 1,
+                "originCount": 1,
+                "gzippedCount": 1,
+                "otherCompressedCount": 0,
+                "origins": [
+                    "https://www.reddit.com"
+                ]
+            },
+            "sfi_memoryOverhead": 14.341224244748888,
+            "css": {
+                "count": 3,
+                "originCount": 1,
+                "gzippedCount": 3,
+                "otherCompressedCount": 0,
+                "origins": [
+                    "https://www.redditstatic.com"
+                ]
+            },
+            "memory": 479708,
+            "alltext": {
+                "count": 33,
+                "originCount": 2,
+                "gzippedCount": 33,
+                "otherCompressedCount": 0,
+                "origins": [
+                    "https://www.reddit.com",
+                    "https://www.redditstatic.com"
+                ]
+            },
+            "png": {
+                "count": 30,
+                "originCount": 5,
+                "gzippedCount": 0,
+                "otherCompressedCount": 0,
+                "origins": [
+                    "https://styles.redditmedia.com",
+                    "https://www.redditstatic.com",
+                    "https://a.thumbs.redditmedia.com",
+                    "https://b.thumbs.redditmedia.com",
+                    "https://emoji.redditmedia.com"
+                ]
+            },
+            "sfi_extraMemory2": 18018,
+            "proc_extraMemory2": 27038,
+            "sfi_memoryOverhead2": 3.7560349212437565,
+            "proc_memoryOverhead2": 5.636345443478116
+        }
+    }
+}
