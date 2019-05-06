@@ -21,7 +21,8 @@ const emptyResult = {
     "png"     : JSON.parse(JSON.stringify(emptyResultRow)),
     "html"    : JSON.parse(JSON.stringify(emptyResultRow)),
     "css"     : JSON.parse(JSON.stringify(emptyResultRow)),
-    "js"      : JSON.parse(JSON.stringify(emptyResultRow))
+    "js"      : JSON.parse(JSON.stringify(emptyResultRow)),
+    "memory"  : "NA"
 };
 var currentResult = JSON.parse(JSON.stringify(emptyResult));
 
@@ -68,6 +69,13 @@ function logURL(details) {
     }
 }
 
+function getMemory() {
+    return browser.runtime.sendNativeMessage("webresourcecrawler_native", "ping")
+    .then(function(response){
+        currentResult.memory = response;
+    });
+}
+
 function launchWebsite(siteStr) {
     return browser.tabs.create({ url: siteStr })
     .then(function (tab) {
@@ -75,7 +83,8 @@ function launchWebsite(siteStr) {
         console.log(`Launching: ${siteStr}`);
     })
     .delay(delayAmount)
-    .then(function(){
+    .then(function() { return getMemory(); })
+    .then(function() {
         var currentTabCopy = currentTab;
         currentTab = -2;
         allResults[siteStr] = currentResult;
@@ -89,7 +98,7 @@ function openPages() {
     if (inProgress) { return; }
     inProgress = true;
 
-    var p  = Promise.resolve(true);
+    var p = Promise.resolve(true);
 
     sites.forEach(function(item){
         p = p.then(function(){ return launchWebsite(item); });
@@ -97,6 +106,7 @@ function openPages() {
 
     p.then(function(){
         console.log("Results: " + JSON.stringify(allResults));
+        alert("Results: " + JSON.stringify(allResults));
         allResults = {};
         inProgress = false;
     });

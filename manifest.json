@@ -13,9 +13,16 @@
         "32": "icons/page-32.png"
       }
     },
+    "applications": {
+      "gecko": {
+        "id": "webresourcecrawler@example.org",
+        "strict_min_version": "50.0"
+      }
+    },
     "permissions": [
       "webRequest",
       "webRequestBlocking",
-      "<all_urls>"
+      "<all_urls>",
+      "nativeMessaging"
     ]
   }

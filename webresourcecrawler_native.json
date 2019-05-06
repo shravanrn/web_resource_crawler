@@ -1,0 +1,7 @@
+{
+  "name": "webresourcecrawler_native",
+  "description": "Native component for webresourcecrawler",
+  "path": "$$",
+  "type": "stdio",
+  "allowed_extensions": [ "webresourcecrawler@example.org" ]
+}
