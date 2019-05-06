@@ -6,23 +6,26 @@ const sites = ["https://developer.mozilla.org", "https://twitter.com/sggrc"];
 //////////////////////////////////////////////////////////////////////////////////
 
 var inProgress = false;
-var currentTab = -2;
 var allResults = {};
 const emptyResultRow = {
-    "count" : 0,
-    "originCount" : 0,
-    "gzippedCount" : 0,
+    "count"                : 0,
+    "originCount"          : 0,
+    "gzippedCount"         : 0,
     "otherCompressedCount" : 0,
-    "origins" : []
+    "origins"              : []
 };
 const emptyResult = {
-    "alltext" : JSON.parse(JSON.stringify(emptyResultRow)),
-    "jpeg"    : JSON.parse(JSON.stringify(emptyResultRow)),
-    "png"     : JSON.parse(JSON.stringify(emptyResultRow)),
-    "html"    : JSON.parse(JSON.stringify(emptyResultRow)),
-    "css"     : JSON.parse(JSON.stringify(emptyResultRow)),
-    "js"      : JSON.parse(JSON.stringify(emptyResultRow)),
-    "memory"  : "NA"
+    "alltext"             : JSON.parse(JSON.stringify(emptyResultRow)),
+    "jpeg"                : JSON.parse(JSON.stringify(emptyResultRow)),
+    "png"                 : JSON.parse(JSON.stringify(emptyResultRow)),
+    "html"                : JSON.parse(JSON.stringify(emptyResultRow)),
+    "css"                 : JSON.parse(JSON.stringify(emptyResultRow)),
+    "js"                  : JSON.parse(JSON.stringify(emptyResultRow)),
+    "memory"              : -1,
+    "sfi_extraMemory"     : -1,
+    "sfi_memoryOverhead"  : -1.0,
+    "proc_extraMemory"    : -1,
+    "proc_memoryOverhead" : -1.0
 };
 var currentResult = JSON.parse(JSON.stringify(emptyResult));
 
@@ -43,10 +46,6 @@ function updateResult(key, url, contentEncoding) {
 }
 
 function logURL(details) {
-    if (details.tabId != currentTab) {
-        return;
-    }
-
     var contentType = last(details.responseHeaders.filter(contentHeader => contentHeader.name == "content-type"));
     var contentEncoding = last(details.responseHeaders.filter(contentHeader => contentHeader.name == "content-encoding"));
 
@@ -65,32 +64,54 @@ function logURL(details) {
     if (isHTML(details.url, contentType) ||
         isJS(details.url, contentType) ||
         isCSS(details.url, contentType)) {
-        updateResult("alltext", details.url);
+        updateResult("alltext", details.url, contentEncoding);
     }
 }
 
 function getMemory() {
-    return browser.runtime.sendNativeMessage("webresourcecrawler_native", "ping")
+    return browser.runtime.sendNativeMessage("webresourcecrawler_native", "getmem")
     .then(function(response){
-        currentResult.memory = response;
+        var memVals = response.split("\n");
+        var max = -1;
+        memVals.forEach(function(val){
+            var v = parseInt(val);
+            if(v > max) { max = v; }
+        });
+        currentResult.memory = max;
     });
 }
 
+function runComputations() {
+    var sandboxes = currentResult["alltext"].gzippedCount + currentResult["jpeg"].originCount + currentResult["png"].originCount;
+    //1.6MB for SFI, 2,4 for proc
+    currentResult.sfi_extraMemory  = 1638 * sandboxes;
+    currentResult.proc_extraMemory = 2458 * sandboxes;
+    currentResult.sfi_memoryOverhead = currentResult.sfi_extraMemory * 100.0 / currentResult.memory;
+    currentResult.proc_memoryOverhead = currentResult.proc_extraMemory * 100.0 / currentResult.memory;
+}
+
 function launchWebsite(siteStr) {
-    return browser.tabs.create({ url: siteStr })
-    .then(function (tab) {
-        currentTab = tab.id;
+    return browser.tabs.query({active: true})
+    .then(function (tabs) {
+        return browser.tabs.update(tabs[0].id, { url: siteStr })
+    })
+    .then(function () {
         console.log(`Launching: ${siteStr}`);
     })
     .delay(delayAmount)
     .then(function() { return getMemory(); })
+    .then(function() { runComputations(); })
     .then(function() {
-        var currentTabCopy = currentTab;
-        currentTab = -2;
         allResults[siteStr] = currentResult;
         currentResult = JSON.parse(JSON.stringify(emptyResult));
         console.log("Intermediate result: " + JSON.stringify(allResults));
-        return browser.tabs.remove(currentTabCopy);
+    });
+}
+
+function postResults(results) {
+    return browser.runtime.sendNativeMessage("webresourcecrawler_native", {
+        "nameStr" : "results",
+        "valueStr" : results
     });
 }
 
@@ -104,11 +125,17 @@ function openPages() {
         p = p.then(function(){ return launchWebsite(item); });
     });
 
-    p.then(function(){
+    p.then(function() {
+        return postResults(allResults);
+    })
+    .then(function(){
         console.log("Results: " + JSON.stringify(allResults));
-        alert("Results: " + JSON.stringify(allResults));
         allResults = {};
         inProgress = false;
+        return browser.tabs.query({active: true})
+    })
+    .then(function (tabs) {
+        return browser.tabs.update(tabs[0].id, { url: "about:blank" })
     });
 }
 

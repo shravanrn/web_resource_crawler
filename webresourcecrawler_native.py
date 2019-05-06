@@ -7,7 +7,8 @@
 import json
 import sys
 import struct
-
+import os
+import subprocess
 
 # Read a message from stdin and decode it.
 def get_message():
@@ -32,8 +33,17 @@ def send_message(encoded_message):
     sys.stdout.write(encoded_message['content'])
     sys.stdout.flush()
 
+currDir = os.path.dirname(os.path.realpath(__file__))
 
 while True:
     message = get_message()
-    if message == "ping":
-        send_message(encode_message("pong"))
+    if message == "getmem":
+        execfile = os.path.join(currDir, "getMem.sh")
+        process = subprocess.Popen([execfile], stdout=subprocess.PIPE)
+        out, err = process.communicate()
+        send_message(encode_message(out))
+    else:
+        outfile = os.path.join(currDir, "out.json")
+        with open(outfile, "w") as text_file:
+            text_file.write("%s" % json.dumps(message))
+        send_message(encode_message("ok"))
