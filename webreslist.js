@@ -46,7 +46,11 @@ const emptyResult = {
     "sfi_extraMemory3"          : -1,
     "sfi_memoryOverhead3"       : -1.0,
     "proc_extraMemory3"         : -1,
-    "proc_memoryOverhead3"      : -1.0
+    "proc_memoryOverhead3"      : -1.0,
+    "sfi_extraMemory4"          : -1,
+    "sfi_memoryOverhead4"       : -1.0,
+    "proc_extraMemory4"         : -1,
+    "proc_memoryOverhead4"      : -1.0
 };
 var currentResult = JSON.parse(JSON.stringify(emptyResult));
 
@@ -133,6 +137,14 @@ function runComputations(curr) {
     curr.proc_extraMemory3 = 2458 * sandboxes3;
     curr.sfi_memoryOverhead3 = curr.sfi_extraMemory3 * 100.0 / curr.memory;
     curr.proc_memoryOverhead3 = curr.proc_extraMemory3 * 100.0 / curr.memory;
+
+
+    var sandboxes4 = curr["compressed"].count + curr["jpeg"].count + curr["png"].count;
+    //1.6MB for SFI, 2.4 for proc
+    curr.sfi_extraMemory4  = 1638 * sandboxes4;
+    curr.proc_extraMemory4 = 2458 * sandboxes4;
+    curr.sfi_memoryOverhead4 = curr.sfi_extraMemory4 * 100.0 / curr.memory;
+    curr.proc_memoryOverhead4 = curr.proc_extraMemory4 * 100.0 / curr.memory;
 }
 
 function launchWebsite(siteStr) {
@@ -160,6 +172,8 @@ function computeSummary(results) {
     var sum_proc_memoryOverhead2 = 0;
     var sum_sfi_memoryOverhead3 = 0;
     var sum_proc_memoryOverhead3 = 0;
+    var sum_sfi_memoryOverhead4 = 0;
+    var sum_proc_memoryOverhead4 = 0;
     var count = 0;
     for (var site in results) {
         if (results.hasOwnProperty(site)) {
@@ -170,6 +184,8 @@ function computeSummary(results) {
             sum_proc_memoryOverhead2 += results[site]["proc_memoryOverhead2"];
             sum_sfi_memoryOverhead3 += results[site]["sfi_memoryOverhead3"];
             sum_proc_memoryOverhead3 += results[site]["proc_memoryOverhead3"];
+            sum_sfi_memoryOverhead4 += results[site]["sfi_memoryOverhead4"];
+            sum_proc_memoryOverhead4 += results[site]["proc_memoryOverhead4"];
         }
     }
     results["summary"] = {
@@ -178,7 +194,9 @@ function computeSummary(results) {
         "sfi_memoryOverhead2"  : sum_sfi_memoryOverhead2  / count,
         "proc_memoryOverhead2" : sum_proc_memoryOverhead2 / count,
         "sfi_memoryOverhead3"  : sum_sfi_memoryOverhead3  / count,
-        "proc_memoryOverhead3" : sum_proc_memoryOverhead3 / count
+        "proc_memoryOverhead3" : sum_proc_memoryOverhead3 / count,
+        "sfi_memoryOverhead4"  : sum_sfi_memoryOverhead4  / count,
+        "proc_memoryOverhead4" : sum_proc_memoryOverhead4 / count
     };
 }
 
