@@ -1,42 +1,57 @@
 //////////////////////////////////////////////////////////////////////////////////
 //Settings
-const delayAmount = 5000;
-const sites = ["https://twitter.com/briankrebs", "https://www.amazon.com/", "https://www.reddit.com/", "https://www.nytimes.com/", "https://www.cnn.com/", "https://www.facebook.com/"];
+const delayAmount = 10000;
+const sites = [
+    "https://twitter.com/search?l=en&q=since%3A2019-05-01&src=typd",
+    "https://www.amazon.com/",
+    "https://www.reddit.com/",
+    "https://www.nytimes.com/",
+    "https://www.cnn.com/",
+    "https://www.facebook.com/",
+    "https://www.youtube.com/"
+];
 
 //////////////////////////////////////////////////////////////////////////////////
 
 var inProgress = false;
 var allResults = {};
 const emptyResultRow = {
-    "count"                : 0,
-    "originCount"          : 0,
-    "gzippedCount"         : 0,
-    "gzippedOriginCount"   : 0,
-    "otherCompressedCount" : 0,
-    "origins"              : [],
-    "gzippedOrigins"       : []
-
+    "count"                     : 0,
+    "originCount"               : 0,
+    "gzippedCount"              : 0,
+    "gzippedOriginCount"        : 0,
+    "gzippedOriginContentCount" : 0,
+    "otherCompressedCount"      : 0,
+    "urls"                      : [],
+    "origins"                   : [],
+    "gzippedOrigins"            : [],
+    "gzippedOriginsContent"     : []
 };
 const emptyResult = {
-    "alltext"             : JSON.parse(JSON.stringify(emptyResultRow)),
-    "jpeg"                : JSON.parse(JSON.stringify(emptyResultRow)),
-    "png"                 : JSON.parse(JSON.stringify(emptyResultRow)),
-    "html"                : JSON.parse(JSON.stringify(emptyResultRow)),
-    "css"                 : JSON.parse(JSON.stringify(emptyResultRow)),
-    "js"                  : JSON.parse(JSON.stringify(emptyResultRow)),
-    "memory"              : -1,
-    "sfi_extraMemory"     : -1,
-    "sfi_memoryOverhead"  : -1.0,
-    "proc_extraMemory"    : -1,
-    "proc_memoryOverhead" : -1.0,
-    "sfi_extraMemory2"     : -1,
-    "sfi_memoryOverhead2"  : -1.0,
-    "proc_extraMemory2"    : -1,
-    "proc_memoryOverhead2" : -1.0
+    "compressed"                : JSON.parse(JSON.stringify(emptyResultRow)),
+    "jpeg"                      : JSON.parse(JSON.stringify(emptyResultRow)),
+    "png"                       : JSON.parse(JSON.stringify(emptyResultRow)),
+    "html"                      : JSON.parse(JSON.stringify(emptyResultRow)),
+    "css"                       : JSON.parse(JSON.stringify(emptyResultRow)),
+    "js"                        : JSON.parse(JSON.stringify(emptyResultRow)),
+    "memory"                    : -1,
+    "sfi_extraMemory"           : -1,
+    "sfi_memoryOverhead"        : -1.0,
+    "proc_extraMemory"          : -1,
+    "proc_memoryOverhead"       : -1.0,
+    "sfi_extraMemory2"          : -1,
+    "sfi_memoryOverhead2"       : -1.0,
+    "proc_extraMemory2"         : -1,
+    "proc_memoryOverhead2"      : -1.0,
+    "sfi_extraMemory3"          : -1,
+    "sfi_memoryOverhead3"       : -1.0,
+    "proc_extraMemory3"         : -1,
+    "proc_memoryOverhead3"      : -1.0
 };
 var currentResult = JSON.parse(JSON.stringify(emptyResult));
 
-function updateResult(key, url, contentEncoding) {
+function updateResult(key, url, contentEncoding, contentType) {
+    currentResult[key].urls.push(url);
     currentResult[key].count++;
 
     const origin = getOrigin(url);
@@ -51,6 +66,12 @@ function updateResult(key, url, contentEncoding) {
             currentResult[key].gzippedOrigins.push(origin);
             currentResult[key].gzippedOriginCount++;
         }
+
+        const originContent = getMimeType(url) + origin;
+        if (!currentResult[key].gzippedOriginsContent.includes(originContent)){
+            currentResult[key].gzippedOriginsContent.push(originContent);
+            currentResult[key].gzippedOriginContentCount++;
+        }
     } else if (isCompressed(contentEncoding)) {
         currentResult[key].otherCompressedCount++;
     }
@@ -61,25 +82,23 @@ function logURL(details) {
     var contentEncoding = last(details.responseHeaders.filter(contentHeader => contentHeader.name == "content-encoding"));
 
     if (isHTML(details.url, contentType)) {
-        updateResult("html", details.url, contentEncoding);
+        updateResult("html", details.url, contentEncoding, contentType);
     } else if (isCSS(details.url, contentType)) {
-        updateResult("css", details.url, contentEncoding);
+        updateResult("css", details.url, contentEncoding, contentType);
     } else if (isJS(details.url, contentType)) {
-        updateResult("js", details.url, contentEncoding);
+        updateResult("js", details.url, contentEncoding, contentType);
     } else if (isJPEG(details.url, contentType)) {
-        updateResult("jpeg", details.url, contentEncoding);
+        updateResult("jpeg", details.url, contentEncoding, contentType);
     } else if (isPNG(details.url, contentType)) {
-        updateResult("png", details.url, contentEncoding);
+        updateResult("png", details.url, contentEncoding, contentType);
     }
 
-    if (isHTML(details.url, contentType) ||
-        isJS(details.url, contentType) ||
-        isCSS(details.url, contentType)) {
-        updateResult("alltext", details.url, contentEncoding);
+    if (isGZipped(contentEncoding)) {
+        updateResult("compressed", details.url, contentEncoding, contentType);
     }
 }
 
-function getMemory() {
+function getMemory(curr) {
     return browser.runtime.sendNativeMessage("webresourcecrawler_native", "getmem")
     .then(function(response){
         var memVals = response.split("\n");
@@ -88,25 +107,32 @@ function getMemory() {
             var v = parseInt(val);
             if(v > max) { max = v; }
         });
-        currentResult.memory = max;
+        curr.memory = max;
     });
 }
 
-function runComputations() {
-    var sandboxes = currentResult["alltext"].gzippedCount + currentResult["jpeg"].originCount + currentResult["png"].originCount;
+function runComputations(curr) {
+    var sandboxes = curr["compressed"].gzippedCount + curr["jpeg"].originCount + curr["png"].originCount;
     //1.6MB for SFI, 2.4 for proc
-    currentResult.sfi_extraMemory  = 1638 * sandboxes;
-    currentResult.proc_extraMemory = 2458 * sandboxes;
-    currentResult.sfi_memoryOverhead = currentResult.sfi_extraMemory * 100.0 / currentResult.memory;
-    currentResult.proc_memoryOverhead = currentResult.proc_extraMemory * 100.0 / currentResult.memory;
+    curr.sfi_extraMemory  = 1638 * sandboxes;
+    curr.proc_extraMemory = 2458 * sandboxes;
+    curr.sfi_memoryOverhead = curr.sfi_extraMemory * 100.0 / curr.memory;
+    curr.proc_memoryOverhead = curr.proc_extraMemory * 100.0 / curr.memory;
 
 
-    var sandboxes2 = currentResult["alltext"].gzippedOriginCount + currentResult["jpeg"].originCount + currentResult["png"].originCount;
+    var sandboxes2 = curr["compressed"].gzippedOriginCount + curr["jpeg"].originCount + curr["png"].originCount;
     //1.6MB for SFI, 2.4 for proc
-    currentResult.sfi_extraMemory2  = 1638 * sandboxes2;
-    currentResult.proc_extraMemory2 = 2458 * sandboxes2;
-    currentResult.sfi_memoryOverhead2 = currentResult.sfi_extraMemory2 * 100.0 / currentResult.memory;
-    currentResult.proc_memoryOverhead2 = currentResult.proc_extraMemory2 * 100.0 / currentResult.memory;
+    curr.sfi_extraMemory2  = 1638 * sandboxes2;
+    curr.proc_extraMemory2 = 2458 * sandboxes2;
+    curr.sfi_memoryOverhead2 = curr.sfi_extraMemory2 * 100.0 / curr.memory;
+    curr.proc_memoryOverhead2 = curr.proc_extraMemory2 * 100.0 / curr.memory;
+
+    var sandboxes3 = curr["compressed"].gzippedOriginContentCount + curr["jpeg"].originCount + curr["png"].originCount;
+    //1.6MB for SFI, 2.4 for proc
+    curr.sfi_extraMemory3  = 1638 * sandboxes3;
+    curr.proc_extraMemory3 = 2458 * sandboxes3;
+    curr.sfi_memoryOverhead3 = curr.sfi_extraMemory3 * 100.0 / curr.memory;
+    curr.proc_memoryOverhead3 = curr.proc_extraMemory3 * 100.0 / curr.memory;
 }
 
 function launchWebsite(siteStr) {
@@ -118,13 +144,42 @@ function launchWebsite(siteStr) {
         console.log(`Launching: ${siteStr}`);
     })
     .delay(delayAmount)
-    .then(function() { return getMemory(); })
-    .then(function() { runComputations(); })
+    .then(function() { return getMemory(currentResult); })
+    .then(function() { runComputations(currentResult); })
     .then(function() {
         allResults[siteStr] = currentResult;
         currentResult = JSON.parse(JSON.stringify(emptyResult));
         console.log("Intermediate result: " + JSON.stringify(allResults));
     });
+}
+
+function computeSummary(results) {
+    var sum_sfi_memoryOverhead = 0;
+    var sum_proc_memoryOverhead = 0;
+    var sum_sfi_memoryOverhead2 = 0;
+    var sum_proc_memoryOverhead2 = 0;
+    var sum_sfi_memoryOverhead3 = 0;
+    var sum_proc_memoryOverhead3 = 0;
+    var count = 0;
+    for (var site in results) {
+        if (results.hasOwnProperty(site)) {
+            count++;
+            sum_sfi_memoryOverhead += results[site]["sfi_memoryOverhead"];
+            sum_proc_memoryOverhead += results[site]["proc_memoryOverhead"];
+            sum_sfi_memoryOverhead2 += results[site]["sfi_memoryOverhead2"];
+            sum_proc_memoryOverhead2 += results[site]["proc_memoryOverhead2"];
+            sum_sfi_memoryOverhead3 += results[site]["sfi_memoryOverhead3"];
+            sum_proc_memoryOverhead3 += results[site]["proc_memoryOverhead3"];
+        }
+    }
+    results["summary"] = {
+        "sfi_memoryOverhead"   : sum_sfi_memoryOverhead   / count,
+        "proc_memoryOverhead"  : sum_proc_memoryOverhead  / count,
+        "sfi_memoryOverhead2"  : sum_sfi_memoryOverhead2  / count,
+        "proc_memoryOverhead2" : sum_proc_memoryOverhead2 / count,
+        "sfi_memoryOverhead3"  : sum_sfi_memoryOverhead3  / count,
+        "proc_memoryOverhead3" : sum_proc_memoryOverhead3 / count
+    };
 }
 
 function postResults(results) {
@@ -145,6 +200,7 @@ function openPages() {
     });
 
     p.then(function() {
+        computeSummary(allResults);
         return postResults(allResults);
     })
     .then(function(){
@@ -190,7 +246,26 @@ function last(arr){
 //////////////////////////////////////////////////////////////////////////////////
 //Content Helpers
 function ext(url) {
-    return (url = url.substr(1 + url.lastIndexOf("/")).split('?')[0]).split('#')[0].substr(url.lastIndexOf(".")).toLowerCase()
+    "use strict";
+    if (url === null) {
+        return "";
+    }
+    var index = url.lastIndexOf("/");
+    if (index !== -1) {
+        url = url.substring(index + 1); // Keep path without its segments
+    }
+    index = url.indexOf("?");
+    if (index !== -1) {
+        url = url.substring(0, index); // Remove query
+    }
+    index = url.indexOf("#");
+    if (index !== -1) {
+        url = url.substring(0, index); // Remove fragment
+    }
+    index = url.lastIndexOf(".");
+    return index !== -1
+        ? url.substring(index + 1) // Only keep file extension
+        : ""; // No extension found
 }
 
 function checkUrlOrContentType(url, contentType, extensions, targetContentType){
@@ -202,23 +277,23 @@ function checkUrlOrContentType(url, contentType, extensions, targetContentType){
 }
 
 function isHTML(url, contentType){
-    return checkUrlOrContentType(url, contentType, ["", ".html"], "text/html");
+    return checkUrlOrContentType(url, contentType, ["", "html"], "text/html");
 }
 
 function isJS(url, contentType){
-    return checkUrlOrContentType(url, contentType, [".js"], "application/javascript");
+    return checkUrlOrContentType(url, contentType, ["js"], "application/javascript");
 }
 
 function isCSS(url, contentType){
-    return checkUrlOrContentType(url, contentType, [".css"], "text/css");
+    return checkUrlOrContentType(url, contentType, ["css"], "text/css");
 }
 
 function isJPEG(url, contentType){
-    return checkUrlOrContentType(url, contentType, [".jpg", ".jpeg"], "image/jpeg");
+    return checkUrlOrContentType(url, contentType, ["jpg", "jpeg"], "image/jpeg");
 }
 
 function isPNG(url, contentType){
-    return checkUrlOrContentType(url, contentType, [".png"], "image/png");
+    return checkUrlOrContentType(url, contentType, ["png"], "image/png");
 }
 
 function isGZipped(contentEncoding){
@@ -236,4 +311,16 @@ function isCompressed(contentEncoding){
 function getOrigin(urlString) {
     const url = new URL(urlString);
     return url.origin;
+}
+
+function getMimeType(url, contentType) {
+    if (isHTML(url, contentType)) { return "text/html";              }
+    if (isJS(url, contentType))   { return "application/javascript"; }
+    if (isCSS(url, contentType))  { return "text/css";               }
+    if (isJPEG(url, contentType)) { return "image/jpeg";             }
+    if (isPNG(url, contentType))  { return "image/png";              }
+    if(!contentType) {
+        return ext(url);
+    }
+    return contentType.value.toLowerCase();
 }
