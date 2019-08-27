@@ -1,4 +1,4 @@
-#!/usr/bin/python -u
+#!/usr/bin/env python3 -u
 
 # Note that running python with the `-u` flag is required on Windows,
 # in order to ensure that stdin and stdout are opened in binary, rather
@@ -35,15 +35,12 @@ def send_message(encoded_message):
 
 currDir = os.path.dirname(os.path.realpath(__file__))
 
+from pathlib import Path
+Path('have_launched_script').touch()
+
 while True:
     message = get_message()
-    if message == "getmem":
-        execfile = os.path.join(currDir, "getMem.sh")
-        process = subprocess.Popen([execfile], stdout=subprocess.PIPE)
-        out, err = process.communicate()
-        send_message(encode_message(out))
-    else:
-        outfile = os.path.join(currDir, "out.json")
-        with open(outfile, "w") as text_file:
-            text_file.write("%s" % json.dumps(message))
-        send_message(encode_message("ok"))
+    outfile = os.path.join(currDir, "out.json")
+    with open(outfile, "w") as text_file:
+        text_file.write("%s" % json.dumps(message))
+    send_message(encode_message("ok"))
