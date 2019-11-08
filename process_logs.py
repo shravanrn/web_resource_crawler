@@ -7,7 +7,7 @@ from functools import reduce
 from collections import namedtuple
 from statistics import mean
 from urllib.parse import urlparse
-
+from collections import Counter
 
 def index(*arg):
   return reduce(lambda x, y: x[y] if x is not None else None, arg)
@@ -47,20 +47,30 @@ def isPNG(urlEntry):
     ret = checkUrlOrContentType(urlEntry, ["png"], "image/png")
     return ret
 
-def getGZippedUrls(entry):
-    ret = list(filter(lambda x: isGZipped(x), entry["loggedUrls"]))
+def isCrossOrigin(siteStr, urlEntry):
+    mainOrigin = getOrigin(siteStr)
+    resourceOrigin = getOrigin(urlEntry["url"])
+    ret = main != resourceOrigin
     return ret
 
-def getCompressedUrls(entry):
-    ret = list(filter(lambda x: isCompressed(x), entry["loggedUrls"]))
+def getGZippedUrls(entries):
+    ret = list(filter(lambda x: isGZipped(x), entries))
     return ret
 
-def getJPEGUrls(entry):
-    ret = list(filter(lambda x: isJPEG(x), entry["loggedUrls"]))
+def getCompressedUrls(entries):
+    ret = list(filter(lambda x: isCompressed(x), entries))
     return ret
 
-def getPNGUrls(entry):
-    ret = list(filter(lambda x: isPNG(x), entry["loggedUrls"]))
+def getJPEGUrls(entries):
+    ret = list(filter(lambda x: isJPEG(x), entries))
+    return ret
+
+def getPNGUrls(entries):
+    ret = list(filter(lambda x: isPNG(x), entries))
+    return ret
+
+def getCrossOriginResources(siteStr, entries):
+    ret = list(filter(lambda x: isCrossOrigin(siteStr, x), entries))
     return ret
 
 def getUniqueOrigins(entries):
@@ -87,56 +97,83 @@ def getProcessMemoryOverhead(memory, sandboxes):
     process_memoryOverhead = process_extraMemory * 100.0 / memory
     return process_memoryOverhead
 
-def writeSandboxMemoryTo(fileName, key, mem_and_sbx_count_per_entry):
+def writeSandboxMemoryTo(key, mem_and_sbx_count_per_entry):
     sfi_overheads = [getSFIMemoryOverhead(mem, sbx_count) for mem, sbx_count in mem_and_sbx_count_per_entry]
     sfi_overhead = mean(sfi_overheads)
     process_overheads = [getProcessMemoryOverhead(mem, sbx_count) for mem, sbx_count in mem_and_sbx_count_per_entry]
     process_overhead = mean(process_overheads)
 
-    with open(fileName, "a") as text_file:
+    with open("memory_analysis.txt", "a") as text_file:
         text_file.write("%s\n" % key)
         text_file.write("SFI Overhead: %s\n" % str(sfi_overhead))
         text_file.write("Process Overhead: %s\n" % str(process_overhead))
         text_file.write("\n")
 
-outputFile = "processed.json"
-
 def sandbox_scheme_1(data):
     # Scheme : Per origin images, per instance gzip
     scheme = [(entry["memory"],
-            len(getGZippedUrls(entry)) + len(getUniqueOrigins(getJPEGUrls(entry))) + len(getUniqueOrigins(getPNGUrls(entry)))
+            len(getGZippedUrls(entry["loggedUrls"])) + len(getUniqueOrigins(getJPEGUrls(entry["loggedUrls"]))) + len(getUniqueOrigins(getPNGUrls(entry["loggedUrls"])))
         ) for entry in data]
-    writeSandboxMemoryTo(outputFile, "PerOriginImagePerInstanceGZip", scheme)
+    writeSandboxMemoryTo("PerOriginImagePerInstanceGZip", scheme)
 
 def sandbox_scheme_2(data):
     # Scheme : Per origin images and per origin gzip
     scheme = [(entry["memory"],
-            len(getUniqueOrigins(getGZippedUrls(entry))) + len(getUniqueOrigins(getJPEGUrls(entry))) + len(getUniqueOrigins(getPNGUrls(entry)))
+            len(getUniqueOrigins(getGZippedUrls(entry["loggedUrls"]))) + len(getUniqueOrigins(getJPEGUrls(entry["loggedUrls"]))) + len(getUniqueOrigins(getPNGUrls(entry["loggedUrls"])))
         ) for entry in data]
-    writeSandboxMemoryTo(outputFile, "PerOriginImagePerOriginGZip", scheme)
+    writeSandboxMemoryTo("PerOriginImagePerOriginGZip", scheme)
 
 def sandbox_scheme_3(data):
     # Scheme : Per origin images and per (origin,content) gzip
     scheme = [(entry["memory"],
-            len(getUniqueOriginContents(getGZippedUrls(entry))) + len(getUniqueOrigins(getJPEGUrls(entry))) + len(getUniqueOrigins(getPNGUrls(entry)))
+            len(getUniqueOriginContents(getGZippedUrls(entry["loggedUrls"]))) + len(getUniqueOrigins(getJPEGUrls(entry["loggedUrls"]))) + len(getUniqueOrigins(getPNGUrls(entry["loggedUrls"])))
         ) for entry in data]
-    writeSandboxMemoryTo(outputFile, "PerOriginImagePerOriginAndContentGZip", scheme)
+    writeSandboxMemoryTo("PerOriginImagePerOriginAndContentGZip", scheme)
 
 def sandbox_scheme_4(data):
     # Scheme : Per instance images, per instance compress
     scheme = [(entry["memory"],
-            len(getCompressedUrls(entry)) + len(getJPEGUrls(entry)) + len(getPNGUrls(entry))
+            len(getCompressedUrls(entry["loggedUrls"])) + len(getJPEGUrls(entry["loggedUrls"])) + len(getPNGUrls(entry["loggedUrls"]))
         ) for entry in data]
-    writeSandboxMemoryTo(outputFile, "PerOriginImagePerInstanceCompressed", scheme)
+    writeSandboxMemoryTo("PerOriginImagePerInstanceCompressed", scheme)
 
-def computeSandboxMemory(data):
-    with open(outputFile, "w") as _:
+def getResourceKey(urlEntry):
+    mimeType = index(urlEntry, "contentType", "value")
+    if mimeType == None:
+        return "missing"
+    if mimeType.startswith("text/"):
+        # text includes css vs html vs js, so divide further
+        key = mimeType.split(";")[0]
+    else:
+        # other resources are fine
+        key = mimeType.split("/")[0]
+    return key
+
+def findCrossOriginResourceTypes(entry):
+    crossOriginResources = getCrossOriginResources(entry["siteStr"], entry["loggedUrls"])
+    resourceTypes = [getResourceKey(res) for res in crossOriginResources]
+    ret = dict(Counter(resourceTypes))
+    ret["siteStr"] = entry["siteStr"]
+    return ret
+
+def sandboxMemoryAnalysis(data):
+    with open("memory_analysis.txt", "w") as _:
         # clear output file
         pass
     sandbox_scheme_1(data)
     sandbox_scheme_2(data)
     sandbox_scheme_3(data)
     sandbox_scheme_4(data)
+
+def crossOriginAnalysis(data):
+    analysis = [findCrossOriginResourceTypes(entry) for entry in data]
+    analysisStr = json.dumps(analysis, indent=4)
+    with open("crossOriginAnalysis.json", "w") as text_file:
+        text_file.write("%s\n" % analysisStr)
+
+def processLogs(data):
+    sandboxMemoryAnalysis(data)
+    crossOriginAnalysis(data)
 
 def main():
     currDir = os.path.dirname(os.path.realpath(__file__))
@@ -147,7 +184,7 @@ def main():
 
     parsedContents = json.loads(contents)
     data = parsedContents["valueStr"]
-    computeSandboxMemory(data)
+    processLogs(data)
 
 
 main()

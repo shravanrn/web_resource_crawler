@@ -1,0 +1,75 @@
+[
+    {
+        "text/html": 2,
+        "text/css": 3,
+        "image": 73,
+        "text/javascript": 7,
+        "application": 27,
+        "missing": 10,
+        "video": 35,
+        "siteStr": "https://twitter.com/search?l=en&q=since%3A2019-05-01&src=typd"
+    },
+    {
+        "text/html": 13,
+        "text/javascript": 3,
+        "text/css": 2,
+        "image": 108,
+        "application": 22,
+        "missing": 48,
+        "siteStr": "https://www.amazon.com/"
+    },
+    {
+        "missing": 37,
+        "text/html": 12,
+        "image": 58,
+        "application": 71,
+        "text/javascript": 19,
+        "text/css": 7,
+        "video": 16,
+        "text/plain": 1,
+        "siteStr": "https://www.reddit.com/"
+    },
+    {
+        "text/html": 14,
+        "text/css": 5,
+        "image": 98,
+        "application": 122,
+        "missing": 32,
+        "font": 9,
+        "video": 1,
+        "text/javascript": 35,
+        "text/event-stream": 3,
+        "text/plain": 9,
+        "siteStr": "https://www.nytimes.com/"
+    },
+    {
+        "text/html": 12,
+        "application": 39,
+        "text/javascript": 34,
+        "missing": 111,
+        "image": 64,
+        "text/plain": 2,
+        "font": 1,
+        "text/x-json": 1,
+        "text/css": 1,
+        "siteStr": "https://www.cnn.com/"
+    },
+    {
+        "image": 25,
+        "text/html": 14,
+        "text/css": 14,
+        "application": 27,
+        "text/javascript": 8,
+        "siteStr": "https://www.facebook.com/"
+    },
+    {
+        "text/html": 6,
+        "missing": 1,
+        "image": 57,
+        "text/javascript": 11,
+        "text/css": 7,
+        "font": 1,
+        "application": 6,
+        "siteStr": "https://www.youtube.com/"
+    }
+]
