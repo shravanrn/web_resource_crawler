@@ -4,7 +4,8 @@
         "image": 5,
         "text/javascript": 4,
         "text/plain": 1,
-        "siteStr": "https://google.com"
+        "siteStr": "https://google.com",
+        "total": 19
     },
     {
         "text/html": 4,
@@ -14,7 +15,8 @@
         "application": 3,
         "font": 1,
         "text/css": 2,
-        "siteStr": "https://youtube.com"
+        "siteStr": "https://youtube.com",
+        "total": 80
     },
     {
         "missing": 2,
@@ -23,17 +25,20 @@
         "image": 55,
         "text/css": 5,
         "text/plain": 1,
-        "siteStr": "https://tmall.com"
+        "siteStr": "https://tmall.com",
+        "total": 121
     },
     {
         "image": 4,
         "missing": 8,
         "application": 7,
         "text/css": 1,
-        "siteStr": "https://baidu.com"
+        "siteStr": "https://baidu.com",
+        "total": 20
     },
     {
-        "siteStr": "https://qq.com"
+        "siteStr": "https://qq.com",
+        "total": 0
     },
     {
         "text/html": 12,
@@ -41,7 +46,8 @@
         "application": 11,
         "image": 7,
         "text/javascript": 7,
-        "siteStr": "https://facebook.com"
+        "siteStr": "https://facebook.com",
+        "total": 41
     },
     {
         "text/html": 11,
@@ -51,7 +57,8 @@
         "text/javascript": 2,
         "text/plain": 1,
         "text/css": 4,
-        "siteStr": "https://sohu.com"
+        "siteStr": "https://sohu.com",
+        "total": 391
     },
     {
         "missing": 6,
@@ -61,13 +68,15 @@
         "image": 64,
         "text/javascript": 2,
         "text/plain": 1,
-        "siteStr": "https://taobao.com"
+        "siteStr": "https://taobao.com",
+        "total": 124
     },
     {
         "image": 10,
         "text/html": 2,
         "application": 2,
-        "siteStr": "https://wikipedia.org"
+        "siteStr": "https://wikipedia.org",
+        "total": 14
     },
     {
         "text/html": 4,
@@ -77,7 +86,8 @@
         "missing": 2,
         "text/javascript": 3,
         "text/plain": 2,
-        "siteStr": "https://login.tmall.com"
+        "siteStr": "https://login.tmall.com",
+        "total": 73
     },
     {
         "image": 45,
@@ -86,21 +96,24 @@
         "application": 147,
         "missing": 31,
         "binary": 1,
-        "siteStr": "https://yahoo.com"
+        "siteStr": "https://yahoo.com",
+        "total": 255
     },
     {
         "missing": 9,
         "image": 134,
         "text/css": 3,
         "application": 14,
-        "siteStr": "https://360.cn"
+        "siteStr": "https://360.cn",
+        "total": 160
     },
     {
         "missing": 28,
         "text/javascript": 1,
         "application": 8,
         "image": 2,
-        "siteStr": "https://jd.com"
+        "siteStr": "https://jd.com",
+        "total": 39
     },
     {
         "missing": 38,
@@ -109,7 +122,8 @@
         "application": 23,
         "text/css": 1,
         "text/javascript": 1,
-        "siteStr": "https://amazon.com"
+        "siteStr": "https://amazon.com",
+        "total": 206
     },
     {
         "missing": 131,
@@ -118,7 +132,8 @@
         "application": 58,
         "text/css": 5,
         "text/javascript": 8,
-        "siteStr": "https://sina.com.cn"
+        "siteStr": "https://sina.com.cn",
+        "total": 357
     },
     {
         "missing": 21,
@@ -126,7 +141,8 @@
         "text/html": 4,
         "text/css": 3,
         "application": 12,
-        "siteStr": "https://weibo.com"
+        "siteStr": "https://weibo.com",
+        "total": 122
     },
     {
         "text/html": 5,
@@ -135,7 +151,8 @@
         "missing": 4,
         "text/css": 2,
         "image": 14,
-        "siteStr": "https://pages.tmall.com"
+        "siteStr": "https://pages.tmall.com",
+        "total": 71
     },
     {
         "image": 33,
@@ -145,7 +162,8 @@
         "text/css": 2,
         "text/javascript": 18,
         "text/plain": 1,
-        "siteStr": "https://reddit.com"
+        "siteStr": "https://reddit.com",
+        "total": 154
     },
     {
         "missing": 6,
@@ -154,7 +172,8 @@
         "application": 12,
         "text/javascript": 2,
         "text/css": 3,
-        "siteStr": "https://live.com"
+        "siteStr": "https://live.com",
+        "total": 61
     },
     {
         "missing": 7,
@@ -163,11 +182,13 @@
         "text/javascript": 2,
         "application": 20,
         "image": 10,
-        "siteStr": "https://vk.com"
+        "siteStr": "https://vk.com",
+        "total": 50
     },
     {
         "missing": 34,
-        "siteStr": "https://netflix.com"
+        "siteStr": "https://netflix.com",
+        "total": 34
     },
     {
         "text/html": 25,
@@ -178,7 +199,8 @@
         "font": 2,
         "missing": 90,
         "text/plain": 5,
-        "siteStr": "https://okezone.com"
+        "siteStr": "https://okezone.com",
+        "total": 322
     },
     {
         "missing": 2,
@@ -186,10 +208,12 @@
         "text/javascript": 3,
         "text/css": 2,
         "image": 51,
-        "siteStr": "https://blogspot.com"
+        "siteStr": "https://blogspot.com",
+        "total": 64
     },
     {
-        "siteStr": "https://alipay.com"
+        "siteStr": "https://alipay.com",
+        "total": 0
     },
     {
         "text/html": 55,
@@ -198,7 +222,8 @@
         "text/css": 28,
         "image": 92,
         "text/plain": 1,
-        "siteStr": "https://csdn.net"
+        "siteStr": "https://csdn.net",
+        "total": 334
     },
     {
         "missing": 13,
@@ -209,7 +234,8 @@
         "text/javascript": 1,
         "text/plain": 1,
         "font": 3,
-        "siteStr": "https://office.com"
+        "siteStr": "https://office.com",
+        "total": 200
     },
     {
         "missing": 2,
@@ -219,7 +245,8 @@
         "image": 11,
         "application": 5,
         "text/plain": 1,
-        "siteStr": "https://instagram.com"
+        "siteStr": "https://instagram.com",
+        "total": 36
     },
     {
         "missing": 16,
@@ -230,18 +257,21 @@
         "text/css": 1,
         "text/plain": 12,
         "video": 1,
-        "siteStr": "https://yahoo.co.jp"
+        "siteStr": "https://yahoo.co.jp",
+        "total": 149
     },
     {
         "image": 9,
-        "siteStr": "https://xinhuanet.com"
+        "siteStr": "https://xinhuanet.com",
+        "total": 9
     },
     {
         "text/html": 14,
         "image": 40,
         "application": 28,
         "missing": 6,
-        "siteStr": "https://bing.com"
+        "siteStr": "https://bing.com",
+        "total": 88
     },
     {
         "missing": 22,
@@ -251,7 +281,8 @@
         "application": 10,
         "font": 2,
         "text/javascript": 4,
-        "siteStr": "https://microsoft.com"
+        "siteStr": "https://microsoft.com",
+        "total": 63
     },
     {
         "missing": 5,
@@ -261,7 +292,8 @@
         "image": 95,
         "text/javascript": 3,
         "text/plain": 2,
-        "siteStr": "https://aliexpress.com"
+        "siteStr": "https://aliexpress.com",
+        "total": 160
     },
     {
         "image": 55,
@@ -270,7 +302,8 @@
         "application": 6,
         "text/javascript": 5,
         "missing": 2,
-        "siteStr": "https://twitter.com/search?l=&q=the%20since%3A2019-11-03%20until%3A2019-11-04&src=typd"
+        "siteStr": "https://twitter.com/search?l=&q=the%20since%3A2019-11-03%20until%3A2019-11-04&src=typd",
+        "total": 73
     },
     {
         "text/html": 7,
@@ -281,7 +314,8 @@
         "missing": 7,
         "text/plain": 4,
         "text/xml": 2,
-        "siteStr": "https://livejasmin.com"
+        "siteStr": "https://livejasmin.com",
+        "total": 134
     },
     {
         "text/html": 1,
@@ -291,17 +325,20 @@
         "font": 2,
         "text/javascript": 1,
         "missing": 5,
-        "siteStr": "https://stackoverflow.com"
+        "siteStr": "https://stackoverflow.com",
+        "total": 50
     },
     {
         "text/html": 11,
         "image": 5,
         "text/javascript": 2,
-        "siteStr": "https://google.com.hk"
+        "siteStr": "https://google.com.hk",
+        "total": 18
     },
     {
         "missing": 127,
-        "siteStr": "https://babytree.com"
+        "siteStr": "https://babytree.com",
+        "total": 127
     },
     {
         "text/html": 6,
@@ -310,7 +347,8 @@
         "image": 66,
         "application": 21,
         "video": 1,
-        "siteStr": "https://naver.com"
+        "siteStr": "https://naver.com",
+        "total": 111
     },
     {
         "missing": 58,
@@ -320,7 +358,8 @@
         "image": 96,
         "text/javascript": 18,
         "text/plain": 6,
-        "siteStr": "https://ebay.com"
+        "siteStr": "https://ebay.com",
+        "total": 222
     },
     {
         "missing": 117,
@@ -330,7 +369,8 @@
         "binary": 3,
         "text/plain": 1,
         "text/html": 3,
-        "siteStr": "https://twitch.tv"
+        "siteStr": "https://twitch.tv",
+        "total": 218
     },
     {
         "missing": 34,
@@ -340,11 +380,13 @@
         "application": 33,
         "text/javascript": 4,
         "text/plain": 2,
-        "siteStr": "https://amazon.co.jp"
+        "siteStr": "https://amazon.co.jp",
+        "total": 354
     },
     {
         "missing": 2,
-        "siteStr": "https://tribunnews.com"
+        "siteStr": "https://tribunnews.com",
+        "total": 2
     },
     {
         "missing": 61,
@@ -352,7 +394,8 @@
         "image": 12,
         "text/javascript": 1,
         "text/html": 1,
-        "siteStr": "https://pornhub.com"
+        "siteStr": "https://pornhub.com",
+        "total": 76
     },
     {
         "missing": 1,
@@ -362,16 +405,19 @@
         "font": 5,
         "image": 28,
         "text/plain": 1,
-        "siteStr": "https://apple.com"
+        "siteStr": "https://apple.com",
+        "total": 57
     },
     {
         "text/html": 11,
         "image": 4,
         "text/javascript": 4,
-        "siteStr": "https://google.co.in"
+        "siteStr": "https://google.co.in",
+        "total": 19
     },
     {
-        "siteStr": "https://tianya.cn"
+        "siteStr": "https://tianya.cn",
+        "total": 0
     },
     {
         "missing": 31,
@@ -380,12 +426,14 @@
         "application": 34,
         "image": 208,
         "text/javascript": 4,
-        "siteStr": "https://amazon.in"
+        "siteStr": "https://amazon.in",
+        "total": 304
     },
     {
         "missing": 4,
         "text/html": 2,
-        "siteStr": "https://microsoftonline.com"
+        "siteStr": "https://microsoftonline.com",
+        "total": 6
     },
     {
         "missing": 175,
@@ -395,7 +443,8 @@
         "text/css": 4,
         "text/javascript": 19,
         "text/plain": 1,
-        "siteStr": "https://msn.com"
+        "siteStr": "https://msn.com",
+        "total": 359
     },
     {
         "missing": 19,
@@ -406,6 +455,7 @@
         "font": 1,
         "text/plain": 2,
         "text/javascript": 4,
-        "siteStr": "https://wordpress.com"
+        "siteStr": "https://wordpress.com",
+        "total": 86
     }
 ]

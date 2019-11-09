@@ -154,6 +154,7 @@ def findCrossOriginResourceTypes(entry):
     resourceTypes = [getResourceKey(res) for res in crossOriginResources]
     ret = dict(Counter(resourceTypes))
     ret["siteStr"] = entry["siteStr"]
+    ret["total"] = len(resourceTypes)
     return ret
 
 def sandboxMemoryAnalysis(data):
