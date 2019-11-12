@@ -144,6 +144,9 @@ def getResourceKey(urlEntry):
     if mimeType.startswith("text/"):
         # text includes css vs html vs js, so divide further
         key = mimeType.split(";")[0]
+    elif mimeType.startswith("image/"):
+        # we also care about variety in image types
+        key = mimeType.split(";")[0]
     else:
         # other resources are fine
         key = mimeType.split("/")[0]
