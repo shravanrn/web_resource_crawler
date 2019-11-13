@@ -10,7 +10,7 @@ PerOriginImagePerOriginAndContentGZip
 SFI Overhead: 2.4932840070031705
 Process Overhead: 3.741448161913183
 
-PerOriginImagePerInstanceCompressed
+PerInstanceImagePerInstanceCompressed
 SFI Overhead: 10.84392380939735
 Process Overhead: 16.272505936201885
 

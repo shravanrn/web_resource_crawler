@@ -135,7 +135,7 @@ def sandbox_scheme_4(data):
     scheme = [(entry["memory"],
             len(getCompressedUrls(entry["loggedUrls"])) + len(getJPEGUrls(entry["loggedUrls"])) + len(getPNGUrls(entry["loggedUrls"]))
         ) for entry in data]
-    writeSandboxMemoryTo("PerOriginImagePerInstanceCompressed", scheme)
+    writeSandboxMemoryTo("PerInstanceImagePerInstanceCompressed", scheme)
 
 def getResourceKey(urlEntry):
     mimeType = index(urlEntry, "contentType", "value")
