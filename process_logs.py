@@ -8,6 +8,7 @@ from collections import namedtuple
 from statistics import mean
 from urllib.parse import urlparse
 from collections import Counter
+import tldextract
 
 def index(*arg):
   return reduce(lambda x, y: x[y] if x is not None else None, arg)
@@ -23,9 +24,11 @@ def getExt(url):
     return ext.lower()
 
 def getOrigin(url):
-    parsed_uri = urlparse(url)
-    result = '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
-    return result.lower()
+    parsed_uri = tldextract.extract(url)
+    return parsed_uri.domain.lower()
+    # parsed_uri = urlparse(url)
+    # result = '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
+    # return result.lower()
 
 def isGZipped(urlEntry):
     return strLowerEquals(index(urlEntry, "contentEncoding", "value"), "gzip")
