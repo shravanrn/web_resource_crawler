@@ -18,7 +18,7 @@ To run, we will follow the steps as outlined [here](https://extensionworkshop.co
 - Open file "./manifest.json"
 - You will see a new icon in the toolbar next to the address bar (sort of looks like a page icon) with the tooltip WebResourceCrawler. Click this.
 - The extension will now go through the Alexa top 500 slowly (spending 10 seconds on each page to account for dynamic resource loading). Do not click on any tabs while Firefox cycles through the webpages. It dumps the raw logs in "LibrarySandboxing/web_resource_crawler/out.json"
-- Then run the following commands to process the data
+- When finished it browses to a blank page. When this happens, run the following commands to process the data
 
     ```bash
     mkdir -p "./data"
