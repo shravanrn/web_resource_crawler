@@ -23,12 +23,14 @@ def getExt(url):
     ext = os.path.splitext(path)[1]
     return ext.lower()
 
-def getOrigin(url):
+def getSite(url):
     parsed_uri = tldextract.extract(url)
     return parsed_uri.domain.lower()
-    # parsed_uri = urlparse(url)
-    # result = '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
-    # return result.lower()
+
+def getOrigin(url):
+    parsed_uri = urlparse(url)
+    result = '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
+    return result.lower()
 
 def isGZipped(urlEntry):
     return strLowerEquals(index(urlEntry, "contentEncoding", "value"), "gzip")
@@ -53,7 +55,7 @@ def isPNG(urlEntry):
 def isCrossOrigin(siteStr, urlEntry):
     mainOrigin = getOrigin(siteStr)
     resourceOrigin = getOrigin(urlEntry["url"])
-    ret = main != resourceOrigin
+    ret = mainOrigin != resourceOrigin
     return ret
 
 def getGZippedUrls(entries):
