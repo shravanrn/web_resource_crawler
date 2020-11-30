@@ -77,6 +77,10 @@ def getPNGUrls(entries):
     ret = list(filter(lambda x: isPNG(x), entries))
     return ret
 
+def getJPEGOrPngUrls(entries):
+    ret = list(filter(lambda x: isJPEG(x) or isPNG(x), entries))
+    return ret
+
 def getCrossOriginResources(siteStr, entries):
     ret = list(filter(lambda x: isCrossOrigin(siteStr, x), entries))
     return ret
@@ -183,7 +187,7 @@ def crossOriginAnalysis(data):
     with open("crossOriginAnalysis.json", "w") as text_file:
         text_file.write("%s\n" % analysisStr)
 
-def getJpegDimension(url):
+def getImageDimension(url):
     try:
         response = requests.get(url)
         img = Image.open(BytesIO(response.content))
@@ -192,15 +196,15 @@ def getJpegDimension(url):
     except:
         return (-1, -1)
 
-def getJpegDimensions(entries):
-    dims = [getJpegDimension(urlEntry["url"]) for urlEntry in entries]
+def getImageDimensions(entries):
+    dims = [getImageDimension(urlEntry["url"]) for urlEntry in entries]
     return dims
 
 def imageSizeAnalysis(data):
-    jpeg_urls = [ getJpegDimensions(getJPEGUrls(entry["loggedUrls"])) for entry in data]
+    jpeg_urls = [ getImageDimensions(getJPEGOrPngUrls(entry["loggedUrls"])) for entry in data]
     flat = [item for sublist in jpeg_urls for item in sublist]
     dimensionsStr = json.dumps(flat, indent=4)
-    with open("imageSizess.json", "w") as text_file:
+    with open("imageSizes.json", "w") as text_file:
         text_file.write("%s\n" % dimensionsStr)
 
     limit = 480
@@ -209,9 +213,9 @@ def imageSizeAnalysis(data):
     large = list(filter(lambda x: x[0] > limit and x[0] != -1, flat))
     with open("imageSizeAnalysis.json", "w") as text_file:
         text_file.write(
-            "Small" + len(small) + "\n" +
-            "Large" + len(large) + "\n" +
-            "Unknown" + len(unknown) + "\n")
+            "Small: " + str(len(small)) + "\n" +
+            "Large: " + str(len(large)) + "\n" +
+            "Unknown: " + str(len(unknown)) + "\n")
 
 def processLogs(data):
     imageSizeAnalysis(data)
