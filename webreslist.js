@@ -104,12 +104,12 @@ function openPages() {
     });
 
     p
-    .then(() => postResults(allResults))
     .then(() => {
         console.log("Results: " + JSON.stringify(allResults));
         inProgress = false;
         return browser.tabs.query({active: true})
     })
+    .then(() => postResults(allResults))
     .then(function (tabs) {
         return browser.tabs.update(tabs[0].id, { url: "about:blank" })
     });
