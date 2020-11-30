@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
 import os
+import os.path
 import urllib
 import simplejson as json
-from functools import reduce
+from functools import reduce, wraps
 from collections import namedtuple
 from statistics import mean
 from urllib.parse import urlparse
@@ -12,6 +13,29 @@ import tldextract
 from PIL import Image
 import requests
 from io import BytesIO
+import errno
+import signal
+
+class TimeoutError(Exception):
+    pass
+
+def timeout(seconds=10, error_message=os.strerror(errno.ETIME)):
+    def decorator(func):
+        def _handle_timeout(signum, frame):
+            raise TimeoutError(error_message)
+
+        def wrapper(*args, **kwargs):
+            signal.signal(signal.SIGALRM, _handle_timeout)
+            signal.alarm(seconds)
+            try:
+                result = func(*args, **kwargs)
+            finally:
+                signal.alarm(0)
+            return result
+
+        return wraps(func)(wrapper)
+
+    return decorator
 
 def index(*arg):
   return reduce(lambda x, y: x[y] if x is not None else None, arg)
@@ -187,30 +211,50 @@ def crossOriginAnalysis(data):
     with open("crossOriginAnalysis.json", "w") as text_file:
         text_file.write("%s\n" % analysisStr)
 
+@timeout(60)
 def getImageDimension(url):
-    try:
-        response = requests.get(url)
-        img = Image.open(BytesIO(response.content))
-        ret = img.size
-        return ret
-    except:
-        return (-1, -1)
+    response = requests.get(url)
+    img = Image.open(BytesIO(response.content))
+    ret = img.size
+    return ret
 
 def getImageDimensions(entries):
-    dims = [getImageDimension(urlEntry["url"]) for urlEntry in entries]
+    dims = []
+    total = len(entries)
+    for i in range(total):
+        print("Processing " + str(i) + " of " + str(total))
+        try:
+            dim = getImageDimension(entries[i]["url"])
+        except:
+            dim = (-1, -1)
+        dims += [ dim ]
     return dims
 
 def imageSizeAnalysis(data):
-    jpeg_urls = [ getImageDimensions(getJPEGOrPngUrls(entry["loggedUrls"])) for entry in data]
-    flat = [item for sublist in jpeg_urls for item in sublist]
-    dimensionsStr = json.dumps(flat, indent=4)
-    with open("imageSizes.json", "w") as text_file:
-        text_file.write("%s\n" % dimensionsStr)
+    imageSizesFile = "imageSizes.json"
+
+    reprocess_existing = true
+    if os.path.isfile(imageSizesFile):
+        res = input("Image sizes file found: reprocess existing data? y/n")
+        if res == "n":
+            reprocess_existing = false
+
+    if not reprocess_existing:
+        jpeg_urls = [ getJPEGOrPngUrls(entry["loggedUrls"]) for entry in data]
+        flat_urls = [item for sublist in jpeg_urls for item in sublist]
+        dims = getImageDimensions(flat_urls)
+        dimensionsStr = json.dumps(dims, indent=4)
+        with open(imageSizesFile, "w") as text_file:
+            text_file.write("%s\n" % dimensionsStr)
+    else:
+        with open(imageSizesFile) as f:
+            contents = f.read()
+        dims = json.loads(contents)
 
     limit = 480
-    small = list(filter(lambda x: x[0] <= limit and x[0] != -1, flat))
-    unknown = list(filter(lambda x: x[0] == -1, flat))
-    large = list(filter(lambda x: x[0] > limit and x[0] != -1, flat))
+    small = list(filter(lambda x: x[0] <= limit and x[0] != -1, dims))
+    unknown = list(filter(lambda x: x[0] == -1, dims))
+    large = list(filter(lambda x: x[0] > limit and x[0] != -1, dims))
     with open("imageSizeAnalysis.json", "w") as text_file:
         text_file.write(
             "Small: " + str(len(small)) + "\n" +
