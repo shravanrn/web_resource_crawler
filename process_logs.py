@@ -199,6 +199,10 @@ def getJpegDimensions(entries):
 def imageSizeAnalysis(data):
     jpeg_urls = [ getJpegDimensions(getJPEGUrls(entry["loggedUrls"])) for entry in data]
     flat = [item for sublist in jpeg_urls for item in sublist]
+    dimensionsStr = json.dumps(flat, indent=4)
+    with open("imageSizess.json", "w") as text_file:
+        text_file.write("%s\n" % dimensionsStr)
+
     limit = 480
     small = list(filter(lambda x: x[0] <= limit and x[0] != -1, flat))
     unknown = list(filter(lambda x: x[0] == -1, flat))
