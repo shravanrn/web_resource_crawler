@@ -9,6 +9,9 @@ from statistics import mean
 from urllib.parse import urlparse
 from collections import Counter
 import tldextract
+from PIL import Image
+import requests
+from io import BytesIO
 
 def index(*arg):
   return reduce(lambda x, y: x[y] if x is not None else None, arg)
@@ -180,7 +183,34 @@ def crossOriginAnalysis(data):
     with open("crossOriginAnalysis.json", "w") as text_file:
         text_file.write("%s\n" % analysisStr)
 
+def getJpegDimension(url):
+    try:
+        response = requests.get(url)
+        img = Image.open(BytesIO(response.content))
+        ret = img.size
+        return ret
+    except:
+        return (-1, -1)
+
+def getJpegDimensions(entries):
+    dims = [getJpegDimension(urlEntry["url"]) for urlEntry in entries]
+    return dims
+
+def imageSizeAnalysis(data):
+    jpeg_urls = [ getJpegDimensions(getJPEGUrls(entry["loggedUrls"])) for entry in data]
+    flat = [item for sublist in jpeg_urls for item in sublist]
+    limit = 480
+    small = list(filter(lambda x: x[0] <= limit and x[0] != -1, flat))
+    unknown = list(filter(lambda x: x[0] == -1, flat))
+    large = list(filter(lambda x: x[0] > limit and x[0] != -1, flat))
+    with open("imageSizeAnalysis.json", "w") as text_file:
+        text_file.write(
+            "Small" + len(small) + "\n" +
+            "Large" + len(large) + "\n" +
+            "Unknown" + len(unknown) + "\n")
+
 def processLogs(data):
+    imageSizeAnalysis(data)
     sandboxMemoryAnalysis(data)
     crossOriginAnalysis(data)
 
