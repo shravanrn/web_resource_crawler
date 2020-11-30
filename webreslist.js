@@ -58,6 +58,10 @@ function getMemory(curr) {
             if(v > max) { max = v; }
         });
         curr.setMemory(max);
+    })
+    .catch((error) => {
+        curr.setMemory(0);
+        console.error(error);
     });
 }
 
